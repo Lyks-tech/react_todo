@@ -16,7 +16,7 @@ class App extends Component {
   }
 
   getTodoList() {
-    Axios.get('http://localhost:8080/api/todo-items/')
+    Axios.get('https://serene-crag-55111.herokuapp.com/api/todo-items/')
       .then(response => {
         this.setState({ todoList : response.data, contentToShow: response.data[0].content }, function () {
           console.log(this.state.todoList[0].content);
