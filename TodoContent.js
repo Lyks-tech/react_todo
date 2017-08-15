@@ -4,29 +4,20 @@ class TodoContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value : ""
+      value : this.props.content
     }
   }
 
-  _onContentEdit(e) {
-    this.setState({ value : e.target.value }, function () {
-      console.log("_onContentEdit() setState value: " + this.state.value);
-    });
+  componentWillReceiveProps(nextProp) {
+    if (typeof nextProp !== 'undefined')
+      this.setState({ value : nextProp.content });
   }
 
-  _def() {
-    if (this.state.value !== "")
-    {
-      console.log("_def() returning this.state.value: " + this.state.value);
-      return (this.state.value);
-    }
-    return (this.props.content);
-  }
   render() {
     return (
       <section id="todo_content">
-        <textarea spellCheck="false" value={this._def()} 
-          onChange={this._onContentEdit.bind(this)} />
+        <textarea spellCheck="false" value={this.state.value} 
+         onChange={e => this.setState({ value : e.target.value })} />
       </section>
     );
   }

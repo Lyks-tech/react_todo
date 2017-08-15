@@ -18,9 +18,10 @@ class App extends Component {
   getTodoList() {
     Axios.get('https://serene-crag-55111.herokuapp.com/api/todo-items/')
       .then(response => {
-        this.setState({ todoList : response.data, contentToShow: response.data[0].content }, function () {
-          console.log("App.js getTodoList() setState default content: " + this.state.todoList[0].content);
-        })
+        this.setState({
+          todoList : response.data,
+          contentToShow: response.data[0].content
+        });
       })
       .catch(error => {
         console.log(error);
@@ -28,7 +29,7 @@ class App extends Component {
   }
 
   _showThisContent(todoItem) {
-    console.log("App.js _showThisContent() fired");
+    console.log("App.js _showThisContent() fired id: " + todoItem.id);
     this.setState({ contentToShow : todoItem.content });
   }
 
@@ -46,7 +47,7 @@ class App extends Component {
           </nav>
           <container>
             <TodoList todoList={this.state.todoList}
-              showThisContent={this._showThisContent.bind(this)} />
+             showThisContent={this._showThisContent.bind(this)} />
             <TodoContent content={this.state.contentToShow} />
           </container>
         </div>
