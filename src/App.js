@@ -18,9 +18,10 @@ class App extends Component {
   getTodoList() {
     Axios.get('https://serene-crag-55111.herokuapp.com/api/todo-items/')
       .then(response => {
-        this.setState({ todoList : response.data, contentToShow: response.data[0].content }, function () {
-          console.log(this.state.todoList[0].content);
-        })
+        this.setState({
+          todoList : response.data,
+          contentToShow: response.data[0].content
+        });
       })
       .catch(error => {
         console.log(error);
@@ -28,7 +29,8 @@ class App extends Component {
   }
 
   _showThisContent(todoItem) {
-    this.setState({ contentToShow : todoItem.content});
+    console.log("App.js _showThisContent() fired id: " + todoItem.id);
+    this.setState({ contentToShow : todoItem.content });
   }
 
   componentWillMount() {
@@ -36,18 +38,22 @@ class App extends Component {
   }
   
   render() {
-    return (
-      <div className="App">
-        <nav>
-          <h2>A collaborative ToDo App</h2>
-        </nav>
-        <container>
-          <TodoList todoList={this.state.todoList}
-            showThisContent={this._showThisContent.bind(this)} />
-          <TodoContent content={this.state.contentToShow} />
-        </container>
-      </div>
-    );
+    if (this.state.todoList[0])
+    {
+      return (
+        <div className="App">
+          <nav>
+            <h2>A collaborative ToDo App</h2>
+          </nav>
+          <container>
+            <TodoList todoList={this.state.todoList}
+             showThisContent={this._showThisContent.bind(this)} />
+            <TodoContent content={this.state.contentToShow} />
+          </container>
+        </div>
+      );
+    }
+    else return ( <p>LOADING DATA</p> );
   }
 }
 
